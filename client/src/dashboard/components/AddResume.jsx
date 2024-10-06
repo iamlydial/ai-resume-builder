@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -27,6 +28,10 @@ const AddResume = () => {
               This action cannot be undone. This will permanently delete your
               account and remove your data from our servers.
             </DialogDescription>
+            <div>
+                <Button variant="ghost gap-5">Cancel</Button>
+                <Button>Create</Button>
+            </div>
           </DialogHeader>
         </DialogContent>
       </Dialog>
