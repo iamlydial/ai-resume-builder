@@ -38,7 +38,7 @@ const AddResume = () => {
         console.log(resp);
         if (resp) {
           setLoading(false);
-          navigate("/dashboard/resume/" + uuid + "/edit");
+          navigate("/dashboard/resume/" + resp.data.data.documentId + "/edit");
         }
       },
       (error) => {
