@@ -1,7 +1,7 @@
 import React from "react";
 
-const SummaryPreview = () => {
-  return <div>SummaryPreview</div>;
+const SummaryPreview = ({ resumeInfo }) => {
+  return <p>{resumeInfo?.summery}</p>;
 };
 
 export default SummaryPreview;
