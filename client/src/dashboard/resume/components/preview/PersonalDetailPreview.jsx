@@ -1,9 +1,7 @@
 import React from "react";
 
 const PersonalDetailPreview = ({ resumeInfo }) => {
-  if (!resumeInfo) {
-    return null; // or return a loading spinner if needed
-  }
+
   return (
     <div>
       <h2
