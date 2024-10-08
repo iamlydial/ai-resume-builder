@@ -5,8 +5,7 @@ import { ArrowLeft, ArrowRight, LayoutGrid } from "lucide-react";
 
 const FormSection = () => {
   const [activeFormIndex, setActiveFormIndex] = useState(1);
-  const [enableNext, setEnableNext] = useState(false);
-
+  const [enableNext,setEnableNext]=useState(true);
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -38,7 +37,7 @@ const FormSection = () => {
       </div>
       {/* Personal Detail Form */}
       {activeFormIndex == 1 ? (
-        <PersonalDetail enableNext={(v) => setEnableNext(v)} />
+        <PersonalDetail enableText={(v) => setEnableNext(v)} />
       ) : null}
 
       {/* Summery */}

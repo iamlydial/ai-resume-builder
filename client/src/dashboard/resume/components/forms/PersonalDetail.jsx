@@ -1,14 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import GlobalApi from "../../../../../service/GlobalApi.js";
+import { LoaderCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const PersonalDetail = ({ enableText }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  
+  const params = useParams();
+  const [formData, setFormData] = useState();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {}, []);
+
   const handleInputChange = (e) => {
     enableText(false);
     const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
     setResumeInfo({
       ...resumeInfo,
       [name]: value,
@@ -17,8 +29,23 @@ const PersonalDetail = ({ enableText }) => {
 
   const onSave = (e) => {
     e.preventDefault();
-    enableText(true);
+    setLoading(true);
+    const data = {
+      data: formData,
+    };
+    GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(
+      (resp) => {
+        console.log(resp);
+        enableText(true);
+        setLoading(false);
+        toast("Details updated.");
+      },
+      (error) => {
+        setLoading(false);
+      }
+    );
   };
+
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Personal Detail</h2>
@@ -51,7 +78,9 @@ const PersonalDetail = ({ enableText }) => {
           </div>
         </div>
         <div className="mt-3 flex justify-end">
-          <Button type="submit">Save</Button>
+          <Button disabled={loading} type="submit">
+            {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+          </Button>
         </div>
       </form>
     </div>
