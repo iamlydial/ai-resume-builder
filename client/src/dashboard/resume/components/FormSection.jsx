@@ -40,7 +40,7 @@ const FormSection = () => {
       {activeFormIndex == 1 ? (
         <PersonalDetail enabledNext={(v) => setEnableNext(v)} />
       ) : activeFormIndex == 2 ? (
-        <Summary />
+        <Summary enabledNext={(v) => setEnableNext(v)} />
       ) : null}
 
       {/* Experience */}
