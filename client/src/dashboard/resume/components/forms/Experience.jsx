@@ -71,8 +71,7 @@ const Experience = ({ enabledNext }) => {
                     onChange={(event) => handleChange(index, event)}
                   />
                 </div>
-                <div>
-                  <label className="text-xs ">Work Summary</label>
+                <div className="col-span-2">
                   <RichTextEditor />
                 </div>
               </div>
