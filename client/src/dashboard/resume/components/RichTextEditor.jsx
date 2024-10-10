@@ -36,21 +36,10 @@ const RichTextEditor = ({ onRichTextEditorChange, index, defaultValue }) => {
       "{positionTitle}",
       resumeInfo?.experience[index].title
     );
-
-    try {
-      const result = await AIchatSession.sendMessage(prompt);
-      const responseText = result.response.text(); // Get the response as text
-      console.log(responseText);
-
-      // Clean the response (removing unwanted brackets or extra characters if needed)
-      const cleanedText = responseText.replace(/[\[\]]/g, ""); // Example cleanup to remove brackets
-
-      // Set the cleaned HTML content in the editor
-      setValue(cleanedText);
-    } catch (error) {
-      console.error("Error generating summary from AI:", error);
-    }
-
+    const result = await AIchatSession.sendMessage(PROMPT);
+    console.log(result.response.text());
+    const resp = result.response.text();
+    setValue(resp.replace("[", "").replace("]", ""));
     setLoading(false);
   };
 
