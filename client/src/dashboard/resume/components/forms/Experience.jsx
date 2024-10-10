@@ -18,6 +18,10 @@ const Experience = ({ enabledNext }) => {
 
   const handleChange = (index, event) => {};
 
+  const AddNewExperince = () => {
+    setExperienceList([...experienceList, formField]);
+  };
+
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Professional Experience</h2>
@@ -79,7 +83,7 @@ const Experience = ({ enabledNext }) => {
           ))}
       </div>
       <div className="flex justify-between">
-        <Button variant="outline" className="text-primary">
+        <Button onClick={AddNewExperince} variant="outline" className="text-primary">
           + Add More
         </Button>
         <Button>Save</Button>
