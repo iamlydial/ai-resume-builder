@@ -1,3 +1,5 @@
+import { ResumeInfoContext } from "@/context/ResumeInfoContext";
+import { Brain, Loader, LoaderCircle } from "lucide-react";
 import React, { useContext, useState } from "react";
 import {
   BtnBold,
@@ -12,12 +14,56 @@ import {
   Separator,
   Toolbar,
 } from "react-simple-wysiwyg";
+import { AIchatSession } from "../../../../service/AIModal.js";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button.jsx";
 
-const RichTextEditor = ({ onRichTextEditorChange }) => {
-  const [value, setValue] = useState();
+const PROMPT =
+  "position titile: {positionTitle} , Depends on position title give me 5-7 bullet points for my experience in resume (Please do not add experince level and No JSON array) , give me result in HTML tags";
+
+const RichTextEditor = ({ onRichTextEditorChange, index, defaultValue }) => {
+  const [value, setValue] = useState(defaultValue);
+  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const [loading, setLoading] = useState(false);
+
+  const GenerateSummaryFromAI = async () => {
+    setLoading(true);
+    if (!resumeInfo.experience[index].title) {
+      toast("Please add Position Title");
+      return;
+    }
+    const prompt = PROMPT.replace(
+      "{positionTitle}",
+      resumeInfo?.experience[index].title
+    );
+    const result = await AIchatSession.sendMessage(PROMPT);
+    console.log(result.response.text());
+    const resp = result.response.text();
+    setValue(resp.replace("[", "").replace("],", ""));
+    setLoading(false);
+  };
 
   return (
     <div>
+      <div className="flex justify-between my-2">
+        <label htmlFor="text-xs">Summary</label>
+        <Button
+          variant="outline"
+          className="flex gap-2 border-primary text-primary"
+          size="sm"
+          type="button"
+          onClick={GenerateSummaryFromAI}
+        >
+          {loading ? (
+            <LoaderCircle className="animate-spin" />
+          ) : (
+            <>
+              <Brain className="w-4 h-4" />
+              Generate From AI
+            </>
+          )}
+        </Button>
+      </div>
       <EditorProvider>
         <Editor
           value={value}

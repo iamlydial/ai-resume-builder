@@ -60,6 +60,7 @@ const Experience = () => {
                   <Input
                     name="title"
                     onChange={(event) => handleChange(index, event)}
+                    defaultValue={item?.title}
                   />
                 </div>
                 <div>
@@ -67,6 +68,7 @@ const Experience = () => {
                   <Input
                     name="companyName"
                     onChange={(event) => handleChange(index, event)}
+                    defaultValue={item?.companyName}
                   />
                 </div>
                 <div>
@@ -74,6 +76,7 @@ const Experience = () => {
                   <Input
                     name="city"
                     onChange={(event) => handleChange(index, event)}
+                    defaultValue={item?.city}
                   />
                 </div>
                 <div>
@@ -81,6 +84,7 @@ const Experience = () => {
                   <Input
                     name="state"
                     onChange={(event) => handleChange(index, event)}
+                    defaultValue={item?.state}
                   />
                 </div>
                 <div>
@@ -89,6 +93,7 @@ const Experience = () => {
                     type="date"
                     name="startDate"
                     onChange={(event) => handleChange(index, event)}
+                    defaultValue={item?.startDate}
                   />
                 </div>
                 <div>
@@ -97,13 +102,16 @@ const Experience = () => {
                     type="date"
                     name="endDate"
                     onChange={(event) => handleChange(index, event)}
+                    defaultValue={item?.endDate}
                   />
                 </div>
                 <div className="col-span-2">
                   <RichTextEditor
+                    index={index}
                     onRichTextEditorChange={(event) =>
                       handleRichTextEditor(event, "workSummary", index)
                     }
+                    defaultValue={item?.workSummary}
                   />
                 </div>
               </div>
