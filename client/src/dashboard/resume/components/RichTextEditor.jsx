@@ -13,7 +13,7 @@ import {
   Toolbar,
 } from "react-simple-wysiwyg";
 
-const RichTextEditor = () => {
+const RichTextEditor = ({onRichTextEditorChange}) => {
   const [value, setValue] = useState();
 
   return (
@@ -23,6 +23,7 @@ const RichTextEditor = () => {
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
+            onRichTextEditorChange(e)
           }}
         >
           <Toolbar>

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RichTextEditor from "../RichTextEditor";
 
 const formField = {
@@ -16,15 +16,30 @@ const formField = {
 const Experience = ({ enabledNext }) => {
   const [experienceList, setExperienceList] = useState([{ formField }]);
 
-  const handleChange = (index, event) => {};
+  const handleChange = (index, event) => {
+    const newEntries = experienceList.slice();
+    const { name, value } = event.target;
+    newEntries[index][name] = value;
+    setExperienceList(newEntries);
+  };
 
-  const AddNewExperince = () => {
+  const AddNewExperience = () => {
     setExperienceList([...experienceList, formField]);
   };
 
   const RemoveExperience = () => {
     setExperienceList((experienceList) => experienceList.slice(0, -1));
   };
+
+  const handleRichTextEditor = (e, name, index) => {
+    const newEntries = experienceList.slice();
+    newEntries[index][name] = e.target.value;
+    setExperienceList(newEntries);
+  };
+
+  useEffect(() => {
+    console.log(experienceList);
+  }, [experienceList]);
 
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
@@ -80,7 +95,11 @@ const Experience = ({ enabledNext }) => {
                   />
                 </div>
                 <div className="col-span-2">
-                  <RichTextEditor />
+                  <RichTextEditor
+                    onRichTextEditorChange={(event) =>
+                      handleRichTextEditor(event, "workSummary", index)
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -90,7 +109,7 @@ const Experience = ({ enabledNext }) => {
         <div className="flex gap-2">
           <Button onClick={RemoveExperience}>- Remove</Button>
           <Button
-            onClick={AddNewExperince}
+            onClick={AddNewExperience}
             variant="outline"
             className="text-primary"
           >
