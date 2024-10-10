@@ -22,9 +22,9 @@ const Experience = ({ enabledNext }) => {
     setExperienceList([...experienceList, formField]);
   };
 
-  const RemoveExperience = () =>{
-    
-  }
+  const RemoveExperience = () => {
+    setExperienceList((experienceList) => experienceList.slice(0, -1));
+  };
 
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
