@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   BtnBold,
   BtnBulletList,
@@ -13,7 +13,7 @@ import {
   Toolbar,
 } from "react-simple-wysiwyg";
 
-const RichTextEditor = ({onRichTextEditorChange}) => {
+const RichTextEditor = ({ onRichTextEditorChange }) => {
   const [value, setValue] = useState();
 
   return (
@@ -23,7 +23,7 @@ const RichTextEditor = ({onRichTextEditorChange}) => {
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
-            onRichTextEditorChange(e)
+            onRichTextEditorChange(e);
           }}
         >
           <Toolbar>

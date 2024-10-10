@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RichTextEditor from "../RichTextEditor";
+import { ResumeInfoContext } from "@/context/ResumeInfoContext";
 
 const formField = {
   title: "",
@@ -13,8 +14,9 @@ const formField = {
   workSummary: "",
 };
 
-const Experience = ({ enabledNext }) => {
+const Experience = () => {
   const [experienceList, setExperienceList] = useState([{ formField }]);
+  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
   const handleChange = (index, event) => {
     const newEntries = experienceList.slice();
@@ -38,7 +40,10 @@ const Experience = ({ enabledNext }) => {
   };
 
   useEffect(() => {
-    console.log(experienceList);
+    setResumeInfo({
+      ...resumeInfo,
+      experience: experienceList,
+    });
   }, [experienceList]);
 
   return (
