@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import React, { useState } from "react";
+import { ResumeInfoContext } from "@/context/ResumeInfoContext";
+import React, { useContext, useEffect, useState } from "react";
 
 const educationField = {
   universityName: "",
@@ -15,8 +16,14 @@ const educationField = {
 const Education = ({ enabledNext }) => {
   const [educationalList, setEducationalList] = useState([educationField]);
   const [loading, setLoading] = useState(false);
+  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
-  const handleChange = (e, index) => {};
+  const handleChange = (e, index) => {
+    const newEntries = educationalList.slice();
+    const { name, value } = e.target;
+    newEntries[index][name] = value;
+    setEducationalList(newEntries);
+  };
 
   const AddNewEducation = () => {
     setEducationalList([...educationalList, educationField]);
@@ -25,6 +32,15 @@ const Education = ({ enabledNext }) => {
   const RemoveNewEducation = () => {
     setEducationalList((educationalList) => educationalList.slice(0, -1));
   };
+
+  const onSave = () => {};
+
+  useEffect(() => {
+    setResumeInfo({
+      ...resumeInfo,
+      education: educationalList,
+    });
+  }, [educationalList]);
 
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
@@ -38,7 +54,7 @@ const Education = ({ enabledNext }) => {
                 <div>
                   <label>University Name</label>
                   <Input
-                    name="universityname"
+                    name="universityName"
                     onChange={(e) => handleChange(e, index)}
                   />
                 </div>
@@ -60,6 +76,7 @@ const Education = ({ enabledNext }) => {
                   <label>Start Date</label>
                   <Input
                     name="startDate"
+                    type="date"
                     onChange={(e) => handleChange(e, index)}
                   />
                 </div>
@@ -67,6 +84,7 @@ const Education = ({ enabledNext }) => {
                   <label>End Date</label>
                   <Input
                     name="endDate"
+                    type="date"
                     onChange={(e) => handleChange(e, index)}
                   />
                 </div>
@@ -93,7 +111,7 @@ const Education = ({ enabledNext }) => {
           </Button>
         </div>
 
-        <Button>Save</Button>
+        <Button onClick={onSave}>Save</Button>
       </div>
     </div>
   );

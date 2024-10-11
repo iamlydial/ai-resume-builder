@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import React, { useContext, useEffect, useState } from "react";
 import RichTextEditor from "../RichTextEditor";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
+import { LoaderCircle } from "lucide-react";
+import GlobalApi from "../../../../../service/GlobalApi.js";
 
 const formField = {
   title: "",
@@ -17,6 +19,7 @@ const formField = {
 const Experience = () => {
   const [experienceList, setExperienceList] = useState([{ formField }]);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (index, event) => {
     const newEntries = experienceList.slice();
@@ -45,6 +48,28 @@ const Experience = () => {
       experience: experienceList,
     });
   }, [experienceList]);
+
+  const onSave = () => {
+    setLoading(true);
+    const data = {
+      data: {
+        Experience: experienceList.map(({ id, ...rest }) => rest),
+      },
+    };
+
+    console.log(experienceList);
+
+    GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(
+      (res) => {
+        console.log(res);
+        setLoading(false);
+        toast("Details updated !");
+      },
+      (error) => {
+        setLoading(false);
+      }
+    );
+  };
 
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
@@ -130,7 +155,9 @@ const Experience = () => {
           </Button>
         </div>
 
-        <Button>Save</Button>
+        <Button disabled={loading} onClick={() => onSave()}>
+          {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+        </Button>
       </div>
     </div>
   );
