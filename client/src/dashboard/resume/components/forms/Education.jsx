@@ -3,6 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import GlobalApi from "../../../../../service/GlobalApi.js";
+import { toast } from "sonner";
 
 const educationField = {
   universityName: "",
@@ -16,6 +19,7 @@ const educationField = {
 const Education = ({ enabledNext }) => {
   const [educationalList, setEducationalList] = useState([educationField]);
   const [loading, setLoading] = useState(false);
+  const params = useParams();
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
   const handleChange = (e, index) => {
@@ -33,7 +37,26 @@ const Education = ({ enabledNext }) => {
     setEducationalList((educationalList) => educationalList.slice(0, -1));
   };
 
-  const onSave = () => {};
+  const onSave = () => {
+    setLoading(true);
+    const data = {
+      data: {
+        Education: educationalList,
+      },
+    };
+
+    GlobalApi.UpdateResumeDetail(params.resumeId, data).then(
+      (resp) => {
+        console.log(resp);
+        setLoading(false);
+        toast("Details updated!");
+      },
+      (error) => {
+        setLoading(false);
+        toast("Server Error please try again!");
+      }
+    );
+  };
 
   useEffect(() => {
     setResumeInfo({

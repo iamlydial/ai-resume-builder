@@ -22,6 +22,7 @@ export interface EducationEducation extends Struct.ComponentSchema {
   info: {
     displayName: 'Education';
     icon: 'book';
+    description: '';
   };
   attributes: {
     universityName: Schema.Attribute.String;
@@ -29,7 +30,7 @@ export interface EducationEducation extends Struct.ComponentSchema {
     major: Schema.Attribute.String;
     startDate: Schema.Attribute.String;
     endDate: Schema.Attribute.String;
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
   };
 }
 
