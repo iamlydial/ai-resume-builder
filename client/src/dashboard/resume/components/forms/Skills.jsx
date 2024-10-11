@@ -1,9 +1,10 @@
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
+import { ResumeInfoContext } from "@/context/ResumeInfoContext";
 
 const skillField = {
   name: "",
@@ -18,12 +19,22 @@ const Skills = () => {
     },
   ]);
   const [loading, setLoading] = useState(false);
+  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
-  const handleChange = (index, name, value) => {};
+  const handleChange = (index, name, value) => {
+    const newEntries = skillsList.slice();
+    newEntries[index][name] = value;
+    setSkillsList(newEntries);
+  };
 
   const AddNewSkill = () => {
-    console.log("clicked");
-    setSkillsList([...skillsList, skillField]);
+    setSkillsList([
+      ...skillsList,
+      {
+        name: "",
+        rating: 0,
+      },
+    ]);
   };
   const RemoveNewSkill = () => {
     setSkillsList((skillsList) => skillsList.slice(0, -1));
@@ -31,9 +42,16 @@ const Skills = () => {
 
   const onSave = () => {};
 
+  useEffect(() => {
+    setResumeInfo({
+      ...resumeInfo,
+      skills: skillsList,
+    });
+  }, [skillsList]);
+
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
-      <h2 className="font-bold text-lg">Education</h2>
+      <h2 className="font-bold text-lg">Skills</h2>
       <p>Add your professional skills</p>
 
       <div>
