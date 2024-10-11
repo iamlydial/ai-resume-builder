@@ -5,6 +5,8 @@ import RichTextEditor from "../RichTextEditor";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
 import { LoaderCircle } from "lucide-react";
 import GlobalApi from "../../../../../service/GlobalApi.js";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const formField = {
   title: "",
@@ -17,9 +19,10 @@ const formField = {
 };
 
 const Experience = () => {
-  const [experienceList, setExperienceList] = useState([{ formField }]);
+  const [experienceList, setExperienceList] = useState([]);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const [loading, setLoading] = useState(false);
+  const params = useParams();
 
   const handleChange = (index, event) => {
     const newEntries = experienceList.slice();
@@ -29,7 +32,18 @@ const Experience = () => {
   };
 
   const AddNewExperience = () => {
-    setExperienceList([...experienceList, formField]);
+    setExperienceList([
+      ...experienceList,
+      {
+        title: "",
+        companyName: "",
+        city: "",
+        state: "",
+        startDate: "",
+        endDate: "",
+        workSummary: "",
+      },
+    ]);
   };
 
   const RemoveExperience = () => {
@@ -67,6 +81,7 @@ const Experience = () => {
       },
       (error) => {
         setLoading(false);
+        toast("Error: Unable to update.");
       }
     );
   };
