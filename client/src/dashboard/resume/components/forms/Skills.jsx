@@ -1,10 +1,78 @@
-import React from "react";
+import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+import { Button } from "@/components/ui/button";
+import { LoaderCircle } from "lucide-react";
+
+const skillField = {
+  name: "",
+  rating: 0,
+};
 
 const Skills = () => {
+  const [skillsList, setSkillsList] = useState([
+    {
+      name: "",
+      rating: 0,
+    },
+  ]);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (index, name, value) => {};
+
+  const AddNewSkill = () => {
+    console.log("clicked");
+    setSkillsList([...skillsList, skillField]);
+  };
+  const RemoveNewSkill = () => {
+    setSkillsList((skillsList) => skillsList.slice(0, -1));
+  };
+
+  const onSave = () => {};
+
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Education</h2>
       <p>Add your professional skills</p>
+
+      <div>
+        {skillsList.map((item, index) => (
+          <div
+            key={index}
+            className="flex justify-between mb-2 border rounded-lg p-3 "
+          >
+            <div className="">
+              <label className="text-xs">Name</label>
+              <Input
+                className="w-full"
+                onChange={(e) => handleChange(index, "name", e.target.value)}
+              />
+            </div>
+            <Rating
+              style={{ maxWidth: 120 }}
+              value={item.rating}
+              onChange={(v) => handleChange(index, "rating", v)}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          <Button onClick={RemoveNewSkill}>- Remove</Button>
+          <Button
+            onClick={AddNewSkill}
+            variant="outline"
+            className="text-primary"
+          >
+            + Add More
+          </Button>
+        </div>
+
+        <Button disabled={loading} onClick={() => onSave()}>
+          {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+        </Button>
+      </div>
     </div>
   );
 };
