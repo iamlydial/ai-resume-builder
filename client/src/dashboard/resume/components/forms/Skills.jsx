@@ -5,6 +5,9 @@ import "@smastrom/react-rating/style.css";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
+import GlobalApi from "../../../../../service/GlobalApi.js";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const skillField = {
   name: "",
@@ -20,6 +23,7 @@ const Skills = () => {
   ]);
   const [loading, setLoading] = useState(false);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const params = useParams();
 
   const handleChange = (index, name, value) => {
     const newEntries = skillsList.slice();
@@ -40,7 +44,26 @@ const Skills = () => {
     setSkillsList((skillsList) => skillsList.slice(0, -1));
   };
 
-  const onSave = () => {};
+  const onSave = () => {
+    setLoading(true);
+    const data = {
+      data: {
+        skills: skillsList,
+      },
+    };
+
+    GlobalApi.UpdateResumeDetail(params.resumeId, data).then(
+      (resp) => {
+        console.log(resp, "skills resp");
+        setLoading(false);
+        toast("Skills updated!");
+      },
+      (error) => {
+        setLoading(false);
+        toast("Server error, try again.");
+      }
+    );
+  };
 
   useEffect(() => {
     setResumeInfo({
