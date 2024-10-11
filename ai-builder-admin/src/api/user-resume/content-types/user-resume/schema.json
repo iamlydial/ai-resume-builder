@@ -44,6 +44,11 @@
     },
     "summary": {
       "type": "text"
+    },
+    "Education": {
+      "type": "component",
+      "repeatable": true,
+      "component": "education.education"
     }
   }
 }
