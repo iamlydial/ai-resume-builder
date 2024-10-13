@@ -29,7 +29,6 @@ const Experience = () => {
       setExperienceList(resumeInfo.Experience);
     }
   }, [resumeInfo]);
-  
 
   const handleChange = (index, event) => {
     const newEntries = experienceList.slice();
