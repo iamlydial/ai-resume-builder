@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import FormSection from "../../components/FormSection";
 import ResumeReview from "../../components/ResumeReview";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import dummy from "@/data/dummy";
 import GlobalApi from "../../../../../service/GlobalApi.js";
 
 const EditResume = () => {
@@ -12,12 +11,23 @@ const EditResume = () => {
   const [resumeInfo, setResumeInfo] = useState();
 
   useEffect(() => {
-    setResumeInfo(dummy);
-    GetResumeInfo();
-  }, []);
+    console.log("Fetching resume with ID:", resumeId); // Add this for debugging
+    if (resumeId) {
+      GetResumeInfo();
+    } else {
+      console.error("No resumeId provided");
+    }
+  }, [resumeId]); // Add resumeId as a dependency
 
   const GetResumeInfo = () => {
-    GlobalApi.GetResumeById(resumeId);
+    GlobalApi.GetResumeById(resumeId)
+      .then((resp) => {
+        console.log(resp.data.data); // Logs the API response data
+        setResumeInfo(resp.data.data); // Updates the state with the fetched data
+      })
+      .catch((error) => {
+        console.error("Error fetching resume info:", error);
+      });
   };
 
   return (
