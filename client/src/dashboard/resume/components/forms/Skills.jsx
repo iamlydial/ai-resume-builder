@@ -21,21 +21,23 @@ const Skills = () => {
       rating: 0,
     },
   ]);
+  const { resumeId } = useParams();
+
   const [loading, setLoading] = useState(false);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const params = useParams();
 
   useEffect(() => {
-    resumeInfo && setSkillsList(resumeInfo.skills);
+    resumeInfo && setSkillsList(resumeInfo?.skills);
   }, []);
 
   const handleChange = (index, name, value) => {
     const newEntries = skillsList.slice();
+
     newEntries[index][name] = value;
     setSkillsList(newEntries);
   };
 
-  const AddNewSkill = () => {
+  const AddNewSkills = () => {
     setSkillsList([
       ...skillsList,
       {
@@ -44,7 +46,7 @@ const Skills = () => {
       },
     ]);
   };
-  const RemoveNewSkill = () => {
+  const RemoveSkills = () => {
     setSkillsList((skillsList) => skillsList.slice(0, -1));
   };
 
@@ -52,19 +54,19 @@ const Skills = () => {
     setLoading(true);
     const data = {
       data: {
-        skills: skillsList?.map(({ id, ...rest }) => rest),
+        skills: skillsList.map(({ id, ...rest }) => rest),
       },
     };
 
-    GlobalApi.UpdateResumeDetail(params.resumeId, data).then(
+    GlobalApi.UpdateResumeDetail(resumeId, data).then(
       (resp) => {
-        console.log(resp, "skills resp");
+        console.log(resp);
         setLoading(false);
-        toast("Skills updated!");
+        toast("Details updated !");
       },
       (error) => {
         setLoading(false);
-        toast("Server error, try again.");
+        toast("Server Error, Try again!");
       }
     );
   };
@@ -72,27 +74,23 @@ const Skills = () => {
   useEffect(() => {
     setResumeInfo({
       ...resumeInfo,
-      Skills: skillsList,
+      skills: skillsList,
     });
   }, [skillsList]);
-
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Skills</h2>
-      <p>Add your professional skills</p>
+      <p>Add Your top professional key skills</p>
 
       <div>
         {skillsList.map((item, index) => (
-          <div
-            key={index}
-            className="flex justify-between mb-2 border rounded-lg p-3 "
-          >
-            <div className="">
+          <div className="flex justify-between mb-2 border rounded-lg p-3 ">
+            <div>
               <label className="text-xs">Name</label>
               <Input
                 className="w-full"
-                onChange={(e) => handleChange(index, "name", e.target.value)}
                 defaultValue={item.name}
+                onChange={(e) => handleChange(index, "name", e.target.value)}
               />
             </div>
             <Rating
@@ -105,16 +103,23 @@ const Skills = () => {
       </div>
       <div className="flex justify-between">
         <div className="flex gap-2">
-          <Button onClick={RemoveNewSkill}>- Remove</Button>
           <Button
-            onClick={AddNewSkill}
             variant="outline"
+            onClick={AddNewSkills}
             className="text-primary"
           >
-            + Add More
+            {" "}
+            + Add More Skill
+          </Button>
+          <Button
+            variant="outline"
+            onClick={RemoveSkills}
+            className="text-primary"
+          >
+            {" "}
+            - Remove
           </Button>
         </div>
-
         <Button disabled={loading} onClick={() => onSave()}>
           {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
         </Button>
