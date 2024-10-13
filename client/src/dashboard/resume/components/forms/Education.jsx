@@ -61,7 +61,7 @@ const Education = ({ enabledNext }) => {
   useEffect(() => {
     setResumeInfo({
       ...resumeInfo,
-      education: educationalList,
+      Education: educationalList,
     });
   }, [educationalList]);
 
