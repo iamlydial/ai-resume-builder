@@ -13,6 +13,10 @@ const EditResume = () => {
     setResumeInfo(dummy);
   }, []);
 
+  const GetResumeINfo = () =>{
+    
+  }
+
   return (
     <ResumeInfoContext.Provider value={{ resumeInfo, setResumeInfo }}>
       <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10">
