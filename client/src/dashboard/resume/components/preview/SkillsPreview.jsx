@@ -1,6 +1,7 @@
 import React from "react";
 
 const SkillsPreview = ({ resumeInfo }) => {
+console.log(resumeInfo, "resumeInfo<<<<")
   return (
     <div className="my-6">
       <h2
