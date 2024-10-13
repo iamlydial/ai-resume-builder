@@ -25,6 +25,10 @@ const Skills = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const params = useParams();
 
+  useEffect(() => {
+    resumeInfo && setSkillsList(resumeInfo.skills);
+  }, []);
+
   const handleChange = (index, name, value) => {
     const newEntries = skillsList.slice();
     newEntries[index][name] = value;

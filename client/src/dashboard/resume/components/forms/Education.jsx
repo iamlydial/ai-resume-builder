@@ -22,6 +22,10 @@ const Education = ({ enabledNext }) => {
   const params = useParams();
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
+  useEffect(()=>{
+    resumeInfo&&setEducationalList(resumeInfo?.Education)
+  },[])
+
   const handleChange = (e, index) => {
     const newEntries = educationalList.slice();
     const { name, value } = e.target;
