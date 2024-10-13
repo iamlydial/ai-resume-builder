@@ -22,9 +22,9 @@ const Education = ({ enabledNext }) => {
   const params = useParams();
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
-  useEffect(()=>{
-    resumeInfo&&setEducationalList(resumeInfo?.Education)
-  },[])
+  useEffect(() => {
+    resumeInfo && setEducationalList(resumeInfo?.Education);
+  }, []);
 
   const handleChange = (e, index) => {
     const newEntries = educationalList.slice();
@@ -83,6 +83,7 @@ const Education = ({ enabledNext }) => {
                   <Input
                     name="universityName"
                     onChange={(e) => handleChange(e, index)}
+                    defaultValue={item?.universityName}
                   />
                 </div>
                 <div>
@@ -90,6 +91,7 @@ const Education = ({ enabledNext }) => {
                   <Input
                     name="degree"
                     onChange={(e) => handleChange(e, index)}
+                    defaultValue={item?.degree}
                   />
                 </div>
                 <div>
@@ -97,6 +99,7 @@ const Education = ({ enabledNext }) => {
                   <Input
                     name="major"
                     onChange={(e) => handleChange(e, index)}
+                    defaultValue={item?.major}
                   />
                 </div>
                 <div>
@@ -105,6 +108,7 @@ const Education = ({ enabledNext }) => {
                     name="startDate"
                     type="date"
                     onChange={(e) => handleChange(e, index)}
+                    defaultValue={item?.startDate}
                   />
                 </div>
                 <div>
@@ -113,13 +117,15 @@ const Education = ({ enabledNext }) => {
                     name="endDate"
                     type="date"
                     onChange={(e) => handleChange(e, index)}
+                    defaultValue={item?.endDate}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label>Description</label>
                   <Textarea
                     name="description"
                     onChange={(e) => handleChange(e, index)}
+                    defaultValue={item?.description}
                   />
                 </div>
               </div>

@@ -92,6 +92,7 @@ const Skills = () => {
               <Input
                 className="w-full"
                 onChange={(e) => handleChange(index, "name", e.target.value)}
+                defaultValue={item.name}
               />
             </div>
             <Rating
