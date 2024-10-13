@@ -48,7 +48,7 @@ const Skills = () => {
     setLoading(true);
     const data = {
       data: {
-        skills: skillsList,
+        skills: skillsList?.map(({ id, ...rest }) => rest),
       },
     };
 

@@ -41,7 +41,7 @@ const Education = ({ enabledNext }) => {
     setLoading(true);
     const data = {
       data: {
-        Education: educationalList,
+        Education: educationalList?.map(({ id, ...rest }) => rest),
       },
     };
 
