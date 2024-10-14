@@ -45,7 +45,7 @@ const Experience = () => {
           state:'',
           startDate:'',
           endDate:'',
-          workSummery:'',
+          workSummary:'',
       }])
   }
 
@@ -63,7 +63,7 @@ const Experience = () => {
   useEffect(()=>{
       setResumeInfo({
           ...resumeInfo,
-          Experience:experienceList
+          experience:experienceList
       });
    
   },[experienceList]);
@@ -73,7 +73,7 @@ const Experience = () => {
       setLoading(true)
       const data={
           data:{
-              Experience:experienceList.map(({ id, ...rest }) => rest)
+              experience:experienceList.map(({ id, ...rest }) => rest)
           }
       }
 
@@ -141,8 +141,8 @@ return (
                          {/* Work Summery  */}
                          <RichTextEditor
                          index={index}
-                         defaultValue={item?.workSummery}
-                         onRichTextEditorChange={(event)=>handleRichTextEditor(event,'workSummery',index)}  />
+                         defaultValue={item?.workSummary}
+                         onRichTextEditorChange={(event)=>handleRichTextEditor(event,'workSummary',index)}  />
                       </div>
                   </div>
               </div>

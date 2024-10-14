@@ -1,4 +1,4 @@
-import { MoreVertical, Notebook, Pen } from "lucide-react";
+import { Loader2Icon, MoreVertical, Notebook, Pen } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -7,11 +7,45 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import GlobalApi from "../../../service/GlobalApi.js";
+import { toast } from "sonner";
 
-const ResumeCardItem = ({ resume }) => {
+const ResumeCardItem = ({ resume, refreshData }) => {
   const navigation = useNavigate();
   const [openAlert, setOpenAlert] = useState(false);
   const [loading, setLoading] = useState(false);
+  console.log(resume.documentId, "resume.documentId");
+
+  const onDelete = () => {
+    if (!resume?.documentId) {
+      console.error("Resume documentId is missing");
+      return;
+    }
+    setLoading(true);
+    GlobalApi.DeleteResumeById(resume.documentId).then(
+      (resp) => {
+        console.log(resp);
+        toast("Resume Deleted!");
+        refreshData();
+        setLoading(false);
+        setOpenAlert(false);
+      },
+      (error) => {
+        setLoading(false);
+      }
+    );
+  };
 
   return (
     <div className="">
@@ -72,6 +106,26 @@ const ResumeCardItem = ({ resume }) => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <AlertDialog open={openAlert}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setOpenAlert(false)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={onDelete} disabled={loading}>
+                {loading ? <Loader2Icon className="animate-spin" /> : "Delete"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
