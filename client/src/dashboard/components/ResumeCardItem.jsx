@@ -77,7 +77,7 @@ const ResumeCardItem = ({ resume, refreshData }) => {
         <h2 className="text-sm">{resume?.title}</h2>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <MoreVertical className="h-4 w-4 bg-blue-800 cursor-pointer" />
+            <MoreVertical className="h-4 w-4 cursor-pointer" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem
